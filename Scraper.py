@@ -2,14 +2,10 @@
 #       Use Beautiful Soup Raw html
 #       integrate into postgre/mysql, whatever kekw
 
-import time
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
-import requests
-import pandas as pd
 import aiohttp
+from SoupAnalysis.SoupAnalyze import analyzeAndInsert
 import asyncio
 
 #    soup = await BeautifulSoup(page.text.encode("ISO-8859-1"), "lxml")
@@ -25,7 +21,9 @@ async def get_site_content(currUrl):
 
 if __name__ == "__main__":
     browser = webdriver.Chrome()
-    for i in range(1,1000):
+    count = 0
+    i = 1
+    while count < 1000:
         browser.get(
             "http://property.treasury.go.th/pvmwebsite/search_data/s_land1_price.asp"
         )  # open website
@@ -49,5 +47,10 @@ if __name__ == "__main__":
             temp = temp.split(",")
             temp[2] = temp[2].replace("'", "")
             templateLink = f"http://property.treasury.go.th/pvmwebsite/search_data/r_land_price.asp?landid={temp[0]}&changwat={temp[1]}&amphur={temp[2]}"
-            print(templateLink)
+            analyzeAndInsert(templateLink)
+        if not links:
+            count += 1
+        else:
+            count = 0
+        i += 1
     browser.quit()
