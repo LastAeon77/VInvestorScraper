@@ -78,7 +78,7 @@ def analyzeAndInsert(curr_url):
     # )
     # end process of gaining info
 
-    loop.close()
+    # loop.close()
     print(type(ChangWat))
 
     try:
@@ -90,7 +90,6 @@ def analyzeAndInsert(curr_url):
             database="VinvestorData",
         )
         cursor = connection.cursor()
-
         postgres_insert_query = """ 
         INSERT INTO public."Chanod_Data"(
         "InSiteURL", "จังหวัด", "สาขา", "รอบบัญชี", "โฉนดเลขที่", "อำเภอ", "หน้าสำรวจ", "ตำบล", "ระวาง", "แผ่นที่", "มาตราส่วน", "เลขที่ดิน", "โซน", "บล็อก", "ล็อท/หน่วย", "เนื้อที่(ไร่-งาน-ตร.วา)", "ราคาประเมิน (บาท ต่อ ตร.)")
